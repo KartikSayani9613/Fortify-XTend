@@ -3,16 +3,24 @@ package FortressToXtend;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure2;
 
 @SuppressWarnings("all")
 public class Sudoko {
   private static ArrayList<ArrayList<Set<Integer>>> board = new ArrayList<ArrayList<Set<Integer>>>();
   
   private static LinkedHashSet<Integer> emptySet = new LinkedHashSet<Integer>();
+  
+  private final static ExecutorService pool = Executors.newFixedThreadPool(3);
+  
+  private static AtomicInteger x = new AtomicInteger(5);
   
   private static Set<Integer> initSet() {
     Set<Integer> initSet = IterableExtensions.<Integer>toSet(new IntegerRange(1, 9));
@@ -80,8 +88,37 @@ public class Sudoko {
     Sudoko.propogateSquare(b, i, j, elem);
   }
   
-  private static Object propogate(final ArrayList<ArrayList<Set<Integer>>> b) {
-    return null;
+  private static void propogate(final ArrayList<ArrayList<Set<Integer>>> b) {
+    int unsolved = 81;
+    int prevUnsolved = 82;
+    while (((0 < unsolved) && (unsolved < prevUnsolved))) {
+      {
+        prevUnsolved = unsolved;
+        unsolved = 0;
+        final Consumer<Integer> _function = (Integer i) -> {
+          final Consumer<Integer> _function_1 = (Integer j) -> {
+            int _size = b.get((i).intValue()).get((j).intValue()).size();
+            boolean _equals = (_size == 1);
+            if (_equals) {
+              Integer elem = IterableExtensions.<Integer>min(b.get((i).intValue()).get((j).intValue()));
+              Sudoko.propogateSingleton(b, (i).intValue(), (j).intValue(), (elem).intValue());
+            }
+          };
+          new IntegerRange(0, 8).forEach(_function_1);
+        };
+        new IntegerRange(0, 8).forEach(_function);
+      }
+    }
+  }
+  
+  private static AtomicInteger incX(final int i) {
+    try {
+      Thread.sleep(2000);
+      InputOutput.<Integer>println(Integer.valueOf(Sudoko.x.getAndIncrement()));
+      return Sudoko.x;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   public static void main(final String[] args) {
@@ -94,8 +131,5 @@ public class Sudoko {
       new IntegerRange(0, 8).forEach(_function_1);
     };
     new IntegerRange(0, 8).forEach(_function);
-    final Procedure2<Integer, Integer> _function_1 = (Integer i, Integer j) -> {
-    };
-    IterableExtensions.<Integer>forEach(new IntegerRange(0, 8), _function_1);
   }
 }
