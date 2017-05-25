@@ -1,26 +1,16 @@
 package FortressToXtend;
 
+import FortressToXtend.Async;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.Callable;
 import java.util.function.Consumer;
-import org.eclipse.xtext.xbase.lib.Exceptions;
-import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class Sudoko {
   private static ArrayList<ArrayList<Set<Integer>>> board = new ArrayList<ArrayList<Set<Integer>>>();
-  
-  private static LinkedHashSet<Integer> emptySet = new LinkedHashSet<Integer>();
-  
-  private final static ExecutorService pool = Executors.newFixedThreadPool(3);
-  
-  private static AtomicInteger x = new AtomicInteger(5);
   
   private static Set<Integer> initSet() {
     Set<Integer> initSet = IterableExtensions.<Integer>toSet(new IntegerRange(1, 9));
@@ -89,47 +79,28 @@ public class Sudoko {
   }
   
   private static void propogate(final ArrayList<ArrayList<Set<Integer>>> b) {
-    int unsolved = 81;
-    int prevUnsolved = 82;
-    while (((0 < unsolved) && (unsolved < prevUnsolved))) {
-      {
-        prevUnsolved = unsolved;
-        unsolved = 0;
-        final Consumer<Integer> _function = (Integer i) -> {
-          final Consumer<Integer> _function_1 = (Integer j) -> {
-            int _size = b.get((i).intValue()).get((j).intValue()).size();
-            boolean _equals = (_size == 1);
-            if (_equals) {
-              Integer elem = IterableExtensions.<Integer>min(b.get((i).intValue()).get((j).intValue()));
-              Sudoko.propogateSingleton(b, (i).intValue(), (j).intValue(), (elem).intValue());
-            }
-          };
-          new IntegerRange(0, 8).forEach(_function_1);
-        };
-        new IntegerRange(0, 8).forEach(_function);
-      }
-    }
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method getIter() from the type Async refers to the missing type Object"
+      + "\nThe method getIter() from the type Async refers to the missing type Object");
   }
   
-  private static AtomicInteger incX(final int i) {
-    try {
-      Thread.sleep(2000);
-      InputOutput.<Integer>println(Integer.valueOf(Sudoko.x.getAndIncrement()));
-      return Sudoko.x;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
+  private static int createRow() {
+    ArrayList<Set<Integer>> _arrayList = new ArrayList<Set<Integer>>();
+    Sudoko.board.add(_arrayList);
+    int _size = Sudoko.board.size();
+    return (_size - 1);
   }
   
   public static void main(final String[] args) {
-    final Consumer<Integer> _function = (Integer i) -> {
-      ArrayList<Set<Integer>> _arrayList = new ArrayList<Set<Integer>>();
-      Sudoko.board.add(_arrayList);
-      final Consumer<Integer> _function_1 = (Integer it) -> {
-        Sudoko.board.get((i).intValue()).add(Sudoko.initSet());
+    final Async i = new Async();
+    final Callable<Object> _function = () -> {
+      final Async j = new Async();
+      final Callable<Object> _function_1 = () -> {
+        return null;
       };
-      new IntegerRange(0, 8).forEach(_function_1);
+      j.<Object>For(0, 5, _function_1);
+      return null;
     };
-    new IntegerRange(0, 8).forEach(_function);
+    i.<Object>For(0, 5, _function);
   }
 }
