@@ -1,0 +1,35 @@
+board.setVal(0, 1, 7)
+board.setVal(0, 4, 1)
+board.setVal(0, 5, 6)
+board.setVal(1, 2, 9)
+board.setVal(1, 7, 5)
+
+board.setVal(2, 0, 1)
+board.setVal(2, 4, 9)
+board.setVal(2, 5, 8)
+board.setVal(2, 7, 7)
+	
+board.setVal(3, 0, 9)
+board.setVal(3, 3, 1)
+board.setVal(3, 5, 4)
+board.setVal(3, 7, 8)
+board.setVal(3, 8, 3)
+	
+		
+board.setVal(5, 0, 6)
+board.setVal(5, 1, 1)
+board.setVal(5, 3, 2)
+board.setVal(5, 5, 9)
+board.setVal(5, 8, 5)
+		
+board.setVal(6, 1, 4)
+board.setVal(6, 3, 8)
+board.setVal(6, 4, 5)
+board.setVal(6, 8, 7)
+		
+board.setVal(7, 1, 5)
+board.setVal(7, 6, 8)
+		
+board.setVal(8, 3, 3)
+board.setVal(8, 4, 4)
+board.setVal(8, 7, 1)	
