@@ -1,7 +1,9 @@
 package FortressToXtend;
 
+import FortressToXtend.Async;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -97,20 +99,26 @@ public class Sudoko {
       {
         prevUnsolved = Sudoko.unsolved.intValue();
         Sudoko.unsolved.set(0);
-        final Consumer<Integer> _function = (Integer i) -> {
-          final Consumer<Integer> _function_1 = (Integer j) -> {
-            int _size = b.get((i).intValue()).get((j).intValue()).size();
+        final Async l1 = new Async();
+        final Callable<Object> _function = () -> {
+          final Async l2 = new Async();
+          final int i = l1.i();
+          final Callable<Object> _function_1 = () -> {
+            final int j = l2.i();
+            int _size = b.get(i).get(j).size();
             boolean _equals = (_size == 1);
             if (_equals) {
-              final Integer elem = IterableExtensions.<Integer>min(b.get((i).intValue()).get((j).intValue()));
-              Sudoko.propogateSingleton(b, (i).intValue(), (j).intValue(), (elem).intValue());
+              final Integer elem = IterableExtensions.<Integer>min(b.get(i).get(j));
+              Sudoko.propogateSingleton(b, i, j, (elem).intValue());
             } else {
               Sudoko.unsolved.getAndIncrement();
             }
+            return null;
           };
-          new IntegerRange(0, 8).forEach(_function_1);
+          l2.For(0, 8, _function_1, 4);
+          return null;
         };
-        new IntegerRange(0, 8).forEach(_function);
+        l1.For(0, 8, _function, 4);
         InputOutput.<String>println(("Remaining " + Sudoko.unsolved));
       }
     }
@@ -133,15 +141,18 @@ public class Sudoko {
   }
   
   public static void main(final String[] args) {
-    long start = System.currentTimeMillis();
-    final Consumer<Integer> _function = (Integer it) -> {
+    final Async l1 = new Async();
+    final Callable<Object> _function = () -> {
       final int rnum = Sudoko.createRow();
-      final Consumer<Integer> _function_1 = (Integer it_1) -> {
+      final Async l2 = new Async();
+      final Callable<Object> _function_1 = () -> {
         Sudoko.board.get(rnum).add(Sudoko.initSet());
+        return null;
       };
-      new IntegerRange(0, 8).forEach(_function_1);
+      l2.For(0, 8, _function_1, 8);
+      return null;
     };
-    new IntegerRange(0, 8).forEach(_function);
+    l1.For(0, 8, _function, 8);
     Sudoko.setVal(Sudoko.board, 0, 0, 8);
     Sudoko.setVal(Sudoko.board, 0, 2, 6);
     Sudoko.setVal(Sudoko.board, 0, 3, 1);
@@ -194,6 +205,7 @@ public class Sudoko {
       InputOutput.<String>println("");
     };
     new IntegerRange(0, 8).forEach(_function_1);
+    long start = System.currentTimeMillis();
     Sudoko.propogate(Sudoko.board);
     long _currentTimeMillis = System.currentTimeMillis();
     long end = (_currentTimeMillis - start);

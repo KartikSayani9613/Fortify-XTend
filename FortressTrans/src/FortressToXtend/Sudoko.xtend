@@ -64,35 +64,35 @@ class Sudoko {
 			prevUnsolved = unsolved.intValue
 			unsolved.set(0)
 			
-			(0..8).forEach[i|
-				(0..8).forEach[j|
-					if(b.get(i).get(j).size == 1){
-						val elem = b.get(i).get(j).min
-						propogateSingleton(b, i, j, elem)
-					}
-					else
-						unsolved.getAndIncrement
-				]
-			]
-
-
-
-//			val l1 = new Async()
-//			l1.For(0, 8, [
-//				val l2 = new Async()
-//				val i = l1.i
-//				l2.For(0, 8, [
-//					val j = l2.i
+//			(0..8).forEach[i|
+//				(0..8).forEach[j|
 //					if(b.get(i).get(j).size == 1){
 //						val elem = b.get(i).get(j).min
 //						propogateSingleton(b, i, j, elem)
 //					}
 //					else
 //						unsolved.getAndIncrement
-//					return null
-//				], 4)
-//				return null
-//			], 4)
+//				]
+//			]
+
+
+
+			val l1 = new Async()
+			l1.For(0, 8, [
+				val l2 = new Async()
+				val i = l1.i
+				l2.For(0, 8, [
+					val j = l2.i
+					if(b.get(i).get(j).size == 1){
+						val elem = b.get(i).get(j).min
+						propogateSingleton(b, i, j, elem)
+					}
+					else
+						unsolved.getAndIncrement
+					return null
+				], 4)
+				return null
+			], 4)
 			println("Remaining "+unsolved)
 		}
 	}
@@ -113,27 +113,26 @@ class Sudoko {
 	}
 
 	def static void main(String[] args) {
-		var start = System.currentTimeMillis()
 		
-		(0..8).forEach[
-			val rnum = createRow()
-			(0..8).forEach[
-				board.get(rnum).add(initSet)
-			]
-		]
-		
-		
-		
-//		val l1 = new Async()
-//		l1.For(0, 8, [
+//		(0..8).forEach[
 //			val rnum = createRow()
-//			val l2 = new Async()
-//			l2.For(0, 8, [
+//			(0..8).forEach[
 //				board.get(rnum).add(initSet)
-//				return null
-//			], 8)
-//			return null
-//		], 8)
+//			]
+//		]
+		
+		
+		
+		val l1 = new Async()
+		l1.For(0, 8, [
+			val rnum = createRow()
+			val l2 = new Async()
+			l2.For(0, 8, [
+				board.get(rnum).add(initSet)
+				return null
+			], 8)
+			return null
+		], 8)
 
 
 
@@ -187,7 +186,7 @@ class Sudoko {
 			println("")
 		]
 		
-		
+		var start = System.currentTimeMillis()
 		propogate(board)
 		
 		
