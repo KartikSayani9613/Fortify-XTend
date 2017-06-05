@@ -108,5 +108,13 @@ public class Async {
 		return array
 	}
 	
+	def public static makeArray(int... vals){
+		val array = new ArrayList<Integer>()
+		(0..vals.size-1).forEach[i|
+			array.add(vals.get(i))
+		]
+		return array
+	}
+	
 
 }

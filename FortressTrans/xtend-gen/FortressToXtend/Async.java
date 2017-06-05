@@ -1,6 +1,7 @@
 package FortressToXtend;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
@@ -9,6 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 
@@ -146,6 +148,17 @@ public class Async {
       new IntegerRange(0, _minus_2).forEach(_function_2);
     };
     new IntegerRange(0, _minus_1).forEach(_function_1);
+    return array;
+  }
+  
+  public static ArrayList<Integer> makeArray(final int... vals) {
+    final ArrayList<Integer> array = new ArrayList<Integer>();
+    int _size = ((List<Integer>)Conversions.doWrapArray(vals)).size();
+    int _minus = (_size - 1);
+    final Consumer<Integer> _function = (Integer i) -> {
+      array.add(Integer.valueOf(vals[(i).intValue()]));
+    };
+    new IntegerRange(0, _minus).forEach(_function);
     return array;
   }
 }
