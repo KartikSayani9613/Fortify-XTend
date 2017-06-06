@@ -13,26 +13,26 @@ class posFeedback {
 		var start = System.currentTimeMillis
 		val l1 = new Async
 		
-		for(i:0..5000){
-			var known = Async.makeArray(1, 5)
-			var kfacts = Async.makeArray(0, 0)
-			var entity = new Entity(0, known, kfacts)
-			while(!entity.tick){
-				
-			}
-//			println(i+"\t"+entity.asString)
-		}
-		
-//		l1.For(0, 5000, [
+//		for(i:0..5000){
 //			var known = Async.makeArray(1, 5)
 //			var kfacts = Async.makeArray(0, 0)
 //			var entity = new Entity(0, known, kfacts)
 //			while(!entity.tick){
+//				
 //			}
-////			println(l1.i+"\t"+entity.asString)
-//			return null
-//		], 1024)
-//		
+////			println(i+"\t"+entity.asString)
+//		}
+		
+		l1.For(0, 5000, [
+			var known = Async.makeArray(1, 5)
+			var kfacts = Async.makeArray(0, 0)
+			var entity = new Entity(0, known, kfacts)
+			while(!entity.tick){
+			}
+//			println(l1.i+"\t"+entity.asString)
+			return null
+		], 32)
+		
 		var end = System.currentTimeMillis - start
 		println(end)
 //		println(Stats.asString)

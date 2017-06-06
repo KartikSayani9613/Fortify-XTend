@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -82,14 +81,9 @@ public class Sudoko {
   }
   
   private static void propogateSingleton(final ArrayList<ArrayList<Set<Integer>>> b, final int i, final int j, final int elem) {
-    try {
-      Thread.sleep(100);
-      Sudoko.propogateRow(b, i, j, elem);
-      Sudoko.propogateColumn(b, i, j, elem);
-      Sudoko.propogateSquare(b, i, j, elem);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
+    Sudoko.propogateRow(b, i, j, elem);
+    Sudoko.propogateColumn(b, i, j, elem);
+    Sudoko.propogateSquare(b, i, j, elem);
   }
   
   private static void propogate(final ArrayList<ArrayList<Set<Integer>>> b) {
@@ -115,10 +109,10 @@ public class Sudoko {
             }
             return null;
           };
-          l2.For(0, 8, _function_1, 4);
+          l2.For(0, 8, _function_1, 512);
           return null;
         };
-        l1.For(0, 8, _function, 4);
+        l1.For(0, 8, _function, 512);
         InputOutput.<String>println(("Remaining " + Sudoko.unsolved));
       }
     }

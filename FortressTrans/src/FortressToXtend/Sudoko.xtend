@@ -50,7 +50,7 @@ class Sudoko {
 	}
 
 	def private static propogateSingleton(ArrayList<ArrayList<Set<Integer>>> b, int i, int j, int elem) {
-		Thread.sleep(100)
+//		Thread.sleep(100)
 		propogateRow(b, i, j, elem)
 		propogateColumn(b, i, j, elem)
 		propogateSquare(b, i, j, elem)
@@ -90,9 +90,9 @@ class Sudoko {
 					else
 						unsolved.getAndIncrement
 					return null
-				], 4)
+				], 512)
 				return null
-			], 4)
+			],512)
 			println("Remaining "+unsolved)
 		}
 	}
@@ -188,9 +188,7 @@ class Sudoko {
 		
 		var start = System.currentTimeMillis()
 		propogate(board)
-		
-		
-		
+
 		var end = System.currentTimeMillis - start
 		println("Time Taken "+end)
 		(0..8).forEach[i|

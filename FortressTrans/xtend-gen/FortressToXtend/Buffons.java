@@ -60,7 +60,7 @@ public class Buffons {
       }
       return Integer.valueOf(_xblockexpression);
     };
-    l1.For(0, 3000, _function, 100);
+    l1.For(0, 3000, _function, 4);
     float _floatValue = Buffons.hits.floatValue();
     float _floatValue_1 = Buffons.n.floatValue();
     float probability = (_floatValue / _floatValue_1);

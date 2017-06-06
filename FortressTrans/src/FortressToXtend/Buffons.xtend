@@ -16,7 +16,7 @@ class Buffons {
 	 	val l1 = new Async
 	 	val r = new Random()
 	 	l1.For(0, 3000, [
-//	 	(0..3000000).forEach[
+//	 	(0..3000).forEach[
 	 		val delta_x = 2*r.nextDouble - 1.0
 	 		val delta_y = 2*r.nextDouble - 1.0
 	 		val rsq = Math.pow(delta_x, 2) + Math.pow(delta_y, 2)
@@ -32,7 +32,7 @@ class Buffons {
 				}
 				n.incrementAndGet
 	 		}
-	 	], 100)
+	 	], 4)
 	 	
 	 	var probability = hits.floatValue/n.floatValue
 	 	var pi_est = 2.0/probability
